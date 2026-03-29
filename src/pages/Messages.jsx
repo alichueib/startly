@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
 const conversations = ['GreenAI', 'HealthVision', 'FinSecure']
 
@@ -8,8 +9,22 @@ const initialMessages = [
 ]
 
 function Messages() {
+  const location = useLocation()
   const [messages, setMessages] = useState(initialMessages)
-  const [inputValue, setInputValue] = useState('')
+  const [inputValue, setInputValue] = useState(location.state?.draft || '')
+  const [selectedConversation, setSelectedConversation] = useState(
+    location.state?.conversation || conversations[0],
+  )
+
+  useEffect(() => {
+    if (location.state?.draft) {
+      setInputValue(location.state.draft)
+    }
+
+    if (location.state?.conversation) {
+      setSelectedConversation(location.state.conversation)
+    }
+  }, [location.state])
 
   const handleSend = () => {
     const trimmedMessage = inputValue.trim()
@@ -38,9 +53,14 @@ function Messages() {
           <div className="conversation-list">
           {conversations.map((conversation) => (
             <button
-              className="conversation-item"
+              className={`conversation-item ${
+                selectedConversation === conversation
+                  ? 'conversation-item--active'
+                  : ''
+              }`}
               key={conversation}
               type="button"
+              onClick={() => setSelectedConversation(conversation)}
             >
               {conversation}
             </button>
@@ -49,7 +69,7 @@ function Messages() {
         </aside>
 
         <section className="chat-main panel chat-panel">
-          <h2>Chat</h2>
+          <h2>{selectedConversation}</h2>
           <div className="chat-messages">
           {messages.map((message, index) => (
             <div

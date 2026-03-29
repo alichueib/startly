@@ -1,3 +1,4 @@
+import TeamManagement from '../components/TeamManagement.jsx'
 import startups from '../data/startups.js'
 
 function InvestorProfile() {
@@ -39,6 +40,14 @@ function InvestorProfile() {
               <section className="panel">
                 <h2>Description</h2>
                 <p>{founderStartup.description}</p>
+              </section>
+
+              <section className="panel startup-section">
+                <TeamManagement
+                  title="Team"
+                  description="Your current founding team and key contributors."
+                  members={founderStartup.team || []}
+                />
               </section>
             </>
           ) : (
