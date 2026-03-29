@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import TeamManagement from '../components/TeamManagement.jsx'
 import { addStartup } from '../data/startups.js'
 
 const initialFormState = {
@@ -333,73 +334,16 @@ function CreateStartup() {
 
           {currentStep === 3 && (
             <div className="wizard-panel">
-              <div className="team-builder__header">
-                <div>
-                  <h2>Team</h2>
-                  <p>Add the core people investors should evaluate first.</p>
-                </div>
-                <button
-                  className="button-secondary"
-                  type="button"
-                  onClick={handleAddTeamMember}
-                >
-                  Add Member
-                </button>
-              </div>
-
-              {formData.team.map((member, index) => (
-                <div key={index} className="team-editor">
-                  <div className="form-row">
-                    <label className="form-field">
-                      <span>Name</span>
-                      <input
-                        className="form-control"
-                        type="text"
-                        value={member.name}
-                        onChange={(event) =>
-                          handleTeamChange(index, 'name', event.target.value)
-                        }
-                      />
-                    </label>
-
-                    <label className="form-field">
-                      <span>Role</span>
-                      <input
-                        className="form-control"
-                        type="text"
-                        value={member.role}
-                        onChange={(event) =>
-                          handleTeamChange(index, 'role', event.target.value)
-                        }
-                      />
-                    </label>
-                  </div>
-
-                  <label className="form-field">
-                    <span>Short Description</span>
-                    <textarea
-                      className="form-control form-control--textarea form-control--compact"
-                      value={member.bio}
-                      onChange={(event) =>
-                        handleTeamChange(index, 'bio', event.target.value)
-                      }
-                      rows="3"
-                    />
-                  </label>
-
-                  {formData.team.length > 1 && (
-                    <button
-                      className="team-editor__remove"
-                      type="button"
-                      onClick={() => handleRemoveTeamMember(index)}
-                    >
-                      Remove member
-                    </button>
-                  )}
-                </div>
-              ))}
-
-              {errors.team && <small className="form-error">{errors.team}</small>}
+              <TeamManagement
+                editable
+                title="Team"
+                description="Add the core people investors should evaluate first."
+                members={formData.team}
+                onAddMember={handleAddTeamMember}
+                onRemoveMember={handleRemoveTeamMember}
+                onChangeMember={handleTeamChange}
+                error={errors.team}
+              />
             </div>
           )}
 

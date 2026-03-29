@@ -13,6 +13,12 @@ function Navbar({ role }) {
               <Link className="topbar__link" to="/browse">
                 Browse
               </Link>
+              <Link className="topbar__link" to="/saved">
+                Saved
+              </Link>
+              <Link className="topbar__link" to="/investor/requests">
+                Requests
+              </Link>
               <Link className="topbar__link" to="/messages">
                 Messages
               </Link>
@@ -26,6 +32,9 @@ function Navbar({ role }) {
             <>
               <Link className="topbar__link" to="/create">
                 Create Startup
+              </Link>
+              <Link className="topbar__link" to="/requests">
+                Requests
               </Link>
               <Link className="topbar__link" to="/profile">
                 Profile
